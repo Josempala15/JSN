@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>JSN — Prints</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --forest:    #1c2e20;
+  --forest-lt: #365c3b;
+  --cream:     #f2ebe0;
+  --cream-drk: #e0d5c0;
+  --parch:     #c4af84;
+  --ink:       #1a180f;
+  --tan:       #9e8455;
+  --mid:       #7a6f5c;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+  --body:  'DM Sans', system-ui, sans-serif;
+  --wall:  #c8bfb0;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--wall);
+  color: var(--ink);
+  font-family: var(--body);
+  font-weight: 300;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 9000;
+}
+
+/* NAV */
+nav {
+  background: var(--forest);
+  position: sticky; top: 0; z-index: 500;
+  border-bottom: 1px solid rgba(196,175,132,0.25);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 56px; height: 62px;
+}
+.nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+.nav-logo svg { display: block; }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(242,235,224,0.6); text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--cream); }
+.nav-right a {
+  font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.1em;
+  color: rgba(196,175,132,0.7); text-decoration: none;
+  border: 1px solid rgba(196,175,132,0.4); padding: 7px 18px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.nav-right a:hover { border-color: var(--parch); color: var(--cream); }
+
+/* PAGE HEADER */
+.page-header {
+  text-align: center;
+  padding: 70px 60px 50px;
+}
+.page-label {
+  font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--tan); display: block; margin-bottom: 12px;
+}
+.page-title {
+  font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-style: italic; color: var(--ink); line-height: 1;
+}
+.page-hint {
+  font-family: var(--serif); font-size: 1rem; font-style: italic;
+  color: rgba(100,90,70,0.55); margin-top: 14px;
+}
+
+/* WALL */
+.wall {
+  position: relative;
+  padding: 20px 60px 80px;
+  /* Plaster wall texture */
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 59px,
+      rgba(0,0,0,0.015) 59px, rgba(0,0,0,0.015) 60px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0px, transparent 59px,
+      rgba(0,0,0,0.015) 59px, rgba(0,0,0,0.015) 60px
+    ),
+    linear-gradient(160deg, #d4cbbf 0%, #c2b9ab 40%, #cac0b2 100%);
+}
+
+/* Skirting board at bottom */
+.wall::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 36px;
+  background: linear-gradient(180deg, #8a7f70 0%, #6e6458 100%);
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.2);
+}
+
+/* Grid of framed prints */
+.prints-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px 50px;
+  position: relative; z-index: 2;
+}
+
+/* Individual framed print */
+.print-frame {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+.print-frame:hover { transform: scale(1.04); z-index: 10; }
+
+/* Picture hanging wire */
+.print-frame::before {
+  content: '';
+  position: absolute;
+  top: -18px; left: 50%; transform: translateX(-50%);
+  width: 60%;
+  height: 18px;
+  border-top: 1.5px solid rgba(80,60,30,0.4);
+  border-radius: 0 0 50% 50%;
+  pointer-events: none;
+}
+
+/* Nail dot */
+.print-frame::after {
+  content: '';
+  position: absolute;
+  top: -22px; left: 50%; transform: translateX(-50%);
+  width: 6px; height: 6px;
+  background: #5a4a38;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* The outer frame */
+.frame-outer {
+  background: linear-gradient(135deg, #6b4e2a 0%, #8b6535 25%, #5a3e1e 50%, #7a5628 75%, #6b4e2a 100%);
+  padding: 14px;
+  box-shadow:
+    4px 4px 16px rgba(0,0,0,0.35),
+    8px 8px 32px rgba(0,0,0,0.2),
+    inset 2px 2px 4px rgba(255,200,100,0.15),
+    inset -2px -2px 4px rgba(0,0,0,0.3);
+  position: relative;
+}
+/* Inner mount (cream mat board) */
+.frame-mat {
+  background: #f5f0e8;
+  padding: 16px;
+  box-shadow: inset 2px 2px 8px rgba(0,0,0,0.15);
+}
+
+/* The actual print image */
+.frame-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ratio, 4/3);
+  object-fit: cover;
+  filter: sepia(0.15) contrast(1.05) brightness(0.92);
+  transition: filter 0.4s ease;
+}
+.print-frame:hover .frame-img {
+  filter: sepia(0.05) contrast(1.02) brightness(1);
+}
+
+/* Info label below frame */
+.print-label {
+  text-align: center;
+  margin-top: 16px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.print-frame:hover .print-label { opacity: 1; transform: none; }
+.print-name {
+  font-family: var(--serif); font-size: 1rem; font-style: italic;
+  color: var(--ink); display: block; margin-bottom: 4px;
+}
+.print-meta {
+  font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--tan); display: block; margin-bottom: 8px;
+}
+.print-price {
+  font-family: var(--sans); font-size: 0.82rem; font-weight: 500; color: var(--forest);
+}
+.print-add {
+  display: inline-block; margin-top: 8px;
+  font-family: var(--sans); font-size: 0.55rem; letter-spacing: 0.2em;
+  text-transform: uppercase; background: var(--forest); color: var(--parch);
+  padding: 7px 16px; border: none; cursor: pointer; transition: background 0.2s;
+}
+.print-add:hover { background: var(--forest-lt); }
+
+/* FOOTER */
+footer {
+  background: var(--forest);
+  border-top: 1px solid rgba(196,175,132,0.15);
+  padding: 36px 60px;
+}
+.footer-inner { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.footer-copy { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.12em; color: rgba(196,175,132,0.35); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="jsn.html" class="nav-logo">
+      <svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="60" y="26" font-family="Georgia, serif" font-size="21" font-weight="400" fill="#f2ebe0" text-anchor="middle" letter-spacing="12">JSN</text>
+        <text x="60" y="38" font-family="Georgia, serif" font-size="5.5" fill="#c4af84" text-anchor="middle" letter-spacing="4" opacity="0.85">2005</text>
+      </svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="magazines.html">Magazines</a></li>
+      <li><a href="prints.html" class="active">Prints</a></li>
+      <li><a href="jsn.html#shelf">The Shelf</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#">Cart (0)</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <span class="page-label">Wall Art</span>
+  <h1 class="page-title">Prints</h1>
+  <p class="page-hint">Hover to view details</p>
+</div>
+
+<div class="wall">
+  <div class="prints-grid">
+
+    <div class="print-frame">
+      <div class="frame-outer">
+        <div class="frame-mat">
+          <img class="frame-img" style="--ratio:4/5;" src="https://images.unsplash.com/photo-1578926288207-a90a5366759d?w=600&q=85" alt="Botanical"/>
+        </div>
+      </div>
+      <div class="print-label">
+        <span class="print-name">Botanical Study, c.1880</span>
+        <span class="print-meta">Original Lithograph</span>
+        <span class="print-price">£220</span>
+        <button class="print-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="print-frame">
+      <div class="frame-outer">
+        <div class="frame-mat">
+          <img class="frame-img" style="--ratio:3/4;" src="https://images.unsplash.com/photo-1582201942988-13e60e4556ee?w=600&q=85" alt="Still Life"/>
+        </div>
+      </div>
+      <div class="print-label">
+        <span class="print-name">Still Life — Oil Study</span>
+        <span class="print-meta">Original Print · Unframed</span>
+        <span class="print-price">£140</span>
+        <button class="print-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="print-frame">
+      <div class="frame-outer">
+        <div class="frame-mat">
+          <img class="frame-img" style="--ratio:5/4;" src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&q=85" alt="Interior"/>
+        </div>
+      </div>
+      <div class="print-label">
+        <span class="print-name">French Interior, 1890s</span>
+        <span class="print-meta">Lithograph · Framed</span>
+        <span class="print-price">£260</span>
+        <button class="print-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="print-frame">
+      <div class="frame-outer">
+        <div class="frame-mat">
+          <img class="frame-img" style="--ratio:3/4;" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=85" alt="Parisian"/>
+        </div>
+      </div>
+      <div class="print-label">
+        <span class="print-name">Parisian Atelier Series</span>
+        <span class="print-meta">Original Engraving</span>
+        <span class="print-price">£175</span>
+        <button class="print-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="print-frame">
+      <div class="frame-outer">
+        <div class="frame-mat">
+          <img class="frame-img" style="--ratio:4/3;" src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=85" alt="Map"/>
+        </div>
+      </div>
+      <div class="print-label">
+        <span class="print-name">Antique Map of Europe</span>
+        <span class="print-meta">Engraving · c.1870</span>
+        <span class="print-price">£310</span>
+        <button class="print-add">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="print-frame">
+      <div class="frame-outer">
+        <div class="frame-mat">
+          <img class="frame-img" style="--ratio:4/5;" src="https://images.unsplash.com/photo-1514195037031-83d60ed3b448?w=600&q=85" alt="Portrait"/>
+        </div>
+      </div>
+      <div class="print-label">
+        <span class="print-name">Victorian Portrait Print</span>
+        <span class="print-meta">Framed · Original</span>
+        <span class="print-price">£175</span>
+        <button class="print-add">Add to Cart</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <svg width="80" height="30" viewBox="0 0 80 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="40" y="19" font-family="Georgia, serif" font-size="16" fill="#f2ebe0" text-anchor="middle" letter-spacing="9">JSN</text>
+      <text x="40" y="28" font-family="Georgia, serif" font-size="5" fill="#c4af84" text-anchor="middle" letter-spacing="4" opacity="0.8">2005</text>
+    </svg>
+    <p class="footer-copy">© 2026 JSN — All rights reserved</p>
+  </div>
+</footer>
+
+</body>
+</html>

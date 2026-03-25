@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>JSN — Magazines</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --forest:    #1c2e20;
+  --forest-lt: #365c3b;
+  --cream:     #f2ebe0;
+  --cream-drk: #e0d5c0;
+  --parch:     #c4af84;
+  --ink:       #1a180f;
+  --tan:       #9e8455;
+  --mid:       #7a6f5c;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+  --body:  'DM Sans', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--body);
+  font-weight: 300;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9000;
+}
+
+/* NAV */
+nav {
+  background: var(--forest);
+  position: sticky; top: 0; z-index: 500;
+  border-bottom: 1px solid rgba(196,175,132,0.25);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 56px; height: 62px;
+}
+.nav-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+.nav-logo svg { display: block; }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(242,235,224,0.6); text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--cream); }
+.nav-right a {
+  font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.1em;
+  color: rgba(196,175,132,0.7); text-decoration: none;
+  border: 1px solid rgba(196,175,132,0.4); padding: 7px 18px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.nav-right a:hover { border-color: var(--parch); color: var(--cream); }
+
+/* PAGE HEADER */
+.page-header {
+  text-align: center;
+  padding: 70px 60px 50px;
+  position: relative;
+}
+.page-label {
+  font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--parch); display: block; margin-bottom: 12px;
+}
+.page-title {
+  font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-style: italic; color: var(--cream); line-height: 1;
+}
+.page-hint {
+  font-family: var(--serif); font-size: 1rem; font-style: italic;
+  color: rgba(196,175,132,0.5); margin-top: 14px;
+}
+
+/* FLOOR — dark wooden floor feel */
+.floor {
+  position: relative;
+  min-height: 80vh;
+  padding: 40px 80px 100px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 119px,
+      rgba(255,255,255,0.015) 119px, rgba(255,255,255,0.015) 120px
+    ),
+    linear-gradient(180deg, #1a1208 0%, #0e0b06 100%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0;
+}
+
+/* Each magazine laid flat/angled on the floor */
+.mag {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.2,0,0.2,1), z-index 0s;
+  flex-shrink: 0;
+}
+.mag:hover { z-index: 100; }
+
+.mag img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(0.2) brightness(0.75) contrast(1.05);
+  transition: filter 0.4s ease, box-shadow 0.4s ease;
+  box-shadow: 4px 6px 20px rgba(0,0,0,0.7), 2px 2px 6px rgba(0,0,0,0.5);
+}
+.mag:hover img {
+  filter: sepia(0.05) brightness(1) contrast(1.02);
+  box-shadow: 8px 16px 40px rgba(0,0,0,0.8), 4px 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Info card that lifts up on hover */
+.mag-info {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%; transform: translateX(-50%);
+  background: var(--forest);
+  border: 1px solid rgba(196,175,132,0.2);
+  padding: 12px 18px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s 0.1s;
+  text-align: center;
+  z-index: 10;
+}
+.mag-info::after {
+  content: '';
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 6px solid transparent; border-top-color: var(--forest);
+}
+.mag:hover .mag-info { opacity: 1; }
+.mag-title {
+  font-family: var(--serif); font-size: 0.95rem; font-style: italic;
+  color: var(--cream); display: block; margin-bottom: 3px;
+}
+.mag-meta {
+  font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.15em;
+  color: var(--parch); display: block; margin-bottom: 6px;
+}
+.mag-price {
+  font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
+  color: var(--cream);
+}
+.mag-add {
+  display: block; margin-top: 8px;
+  font-family: var(--sans); font-size: 0.55rem; letter-spacing: 0.2em;
+  text-transform: uppercase; background: var(--forest-lt); color: var(--parch);
+  padding: 6px 14px; border: none; cursor: pointer; transition: background 0.2s;
+  pointer-events: all;
+}
+.mag-add:hover { background: #4a6741; }
+
+/* FOOTER */
+footer {
+  background: var(--forest);
+  border-top: 1px solid rgba(196,175,132,0.15);
+  padding: 36px 60px;
+}
+.footer-inner { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.footer-copy { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.12em; color: rgba(196,175,132,0.35); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="jsn.html" class="nav-logo">
+      <svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="60" y="26" font-family="Georgia, serif" font-size="21" font-weight="400" fill="#f2ebe0" text-anchor="middle" letter-spacing="12">JSN</text>
+        <text x="60" y="38" font-family="Georgia, serif" font-size="5.5" fill="#c4af84" text-anchor="middle" letter-spacing="4" opacity="0.85">2005</text>
+      </svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="magazines.html" class="active">Magazines</a></li>
+      <li><a href="prints.html">Prints</a></li>
+      <li><a href="jsn.html#shelf">The Shelf</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#">Cart (0)</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <span class="page-label">Archive</span>
+  <h1 class="page-title">Magazines</h1>
+  <p class="page-hint">Hover to take a closer look</p>
+</div>
+
+<div class="floor">
+
+  <div class="mag" style="width:210px;height:280px;transform:rotate(-8deg) translate(20px,30px);">
+    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&q=85" alt="Vogue Paris"/>
+    <div class="mag-info">
+      <span class="mag-title">Vogue Paris</span>
+      <span class="mag-meta">Autumn 1971</span>
+      <span class="mag-price">£145</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="mag" style="width:240px;height:320px;transform:rotate(5deg) translate(-10px,10px);">
+    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400&q=85" alt="Harper's Bazaar"/>
+    <div class="mag-info">
+      <span class="mag-title">Harper's Bazaar</span>
+      <span class="mag-meta">Spring 1968</span>
+      <span class="mag-price">£90</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="mag" style="width:190px;height:255px;transform:rotate(-3deg) translate(5px,50px);">
+    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=85" alt="National Geographic"/>
+    <div class="mag-info">
+      <span class="mag-title">National Geographic</span>
+      <span class="mag-meta">Africa Issue, 1974</span>
+      <span class="mag-price">£55</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="mag" style="width:220px;height:295px;transform:rotate(10deg) translate(-20px,20px);">
+    <img src="https://images.unsplash.com/photo-1509099863731-ef4bff19e808?w=400&q=85" alt="Life Magazine"/>
+    <div class="mag-info">
+      <span class="mag-title">Life Magazine</span>
+      <span class="mag-meta">Moon Landing, 1969</span>
+      <span class="mag-price">£75</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="mag" style="width:200px;height:270px;transform:rotate(-12deg) translate(30px,60px);">
+    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&q=85" alt="Vogue UK"/>
+    <div class="mag-info">
+      <span class="mag-title">Vogue UK</span>
+      <span class="mag-meta">Summer 1965</span>
+      <span class="mag-price">£120</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="mag" style="width:230px;height:305px;transform:rotate(6deg) translate(-30px,40px);">
+    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400&q=85" alt="Elle France"/>
+    <div class="mag-info">
+      <span class="mag-title">Elle France</span>
+      <span class="mag-meta">Collector's Edition, 1972</span>
+      <span class="mag-price">£95</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="mag" style="width:185px;height:248px;transform:rotate(-5deg) translate(15px,80px);">
+    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=85" alt="Time"/>
+    <div class="mag-info">
+      <span class="mag-title">Time Magazine</span>
+      <span class="mag-meta">Man of the Year, 1963</span>
+      <span class="mag-price">£65</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="mag" style="width:215px;height:285px;transform:rotate(9deg) translate(-15px,55px);">
+    <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&q=85" alt="Vogue Italia"/>
+    <div class="mag-info">
+      <span class="mag-title">Vogue Italia</span>
+      <span class="mag-meta">September 1973</span>
+      <span class="mag-price">£180</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="mag" style="width:200px;height:268px;transform:rotate(-7deg) translate(40px,35px);">
+    <img src="https://images.unsplash.com/photo-1509099863731-ef4bff19e808?w=400&q=85" alt="Illustrated London News"/>
+    <div class="mag-info">
+      <span class="mag-title">Illustrated London News</span>
+      <span class="mag-meta">Coronation Issue, 1953</span>
+      <span class="mag-price">£85</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="mag" style="width:225px;height:300px;transform:rotate(4deg) translate(-25px,70px);">
+    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400&q=85" alt="Nova"/>
+    <div class="mag-info">
+      <span class="mag-title">Nova Magazine</span>
+      <span class="mag-meta">October 1970</span>
+      <span class="mag-price">£110</span>
+      <button class="mag-add">Add to Cart</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <svg width="80" height="30" viewBox="0 0 80 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="40" y="19" font-family="Georgia, serif" font-size="16" fill="#f2ebe0" text-anchor="middle" letter-spacing="9">JSN</text>
+      <text x="40" y="28" font-family="Georgia, serif" font-size="5" fill="#c4af84" text-anchor="middle" letter-spacing="4" opacity="0.8">2005</text>
+    </svg>
+    <p class="footer-copy">© 2026 JSN — All rights reserved</p>
+  </div>
+</footer>
+
+</body>
+</html>
