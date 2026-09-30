@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JSN – Clean UK Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body>
+<header><h1>JSN</h1><span style="flex:1"></span>
+<nav><button id="t1" class="on">Map</button><button id="t2">Community cleans</button><button id="t3">Good news</button><button id="t4">Donate</button><button id="t5">Information</button><button id="t6">My stats</button></nav><span id="who" class="mute" style="color:#cfeee2"></span></header>
+
+<main id="v1">
+<section>
+<div id="mapwrap"><div id="tiles"></div><svg id="ov"></svg>
+<div id="sb"><input id="q" placeholder="Search address or postcode"><button id="loc" title="My location">◎</button></div>
+<div class="ctl"><button id="zi">+</button><button id="zo">−</button></div>
+<div id="attr">© OpenStreetMap contributors</div><div id="pop" class="hide"></div></div>
+<div class="card" style="margin-top:12px">
+<label style="display:flex;gap:6px;align-items:center;margin:8px 0 0"><input type="checkbox" id="demo" checked style="width:auto"> Show demo data</label><label style="display:flex;gap:6px;align-items:center;margin:4px 0 0"><input type="checkbox" id="cleanw" style="width:auto"> Show cleaned reports</label><p class="mute" style="margin:8px 0 0">Tap a pin to see the photo and mark it cleaned. Orange pins need cleaning, green ones are done. Click an empty spot to place a new report.</p></div>
+</section>
+<section>
+<div class="card"><h2>Report trash</h2>
+<label>1. Photo (location is read from the photo automatically)</label><input id="photo" type="file" accept="image/*">
+<div id="pin" class="mute" style="margin-top:6px">No location yet.</div>
+<label>2. What is it?</label><select id="cat"></select>
+<label>3. Note (optional)</label><input id="note" maxlength="200" placeholder="e.g. by the bench, two black bags">
+<button class="p" id="go">Submit report</button><div id="msg"></div></div>
+<div class="card"><h2>Needs cleaning</h2><div id="reps" class="mute">Nothing reported yet.</div></div>
+</section>
+</main>
+
+<main id="v2" class="hide">
+<section><div class="card"><h2>Upcoming cleans</h2><div id="evs" class="mute">No cleans planned yet – create one!</div></div>
+<div class="card"><h2>Kit requests</h2><div id="reqs" class="mute">No requests yet.</div></div></section>
+<section><div class="card"><h2>Organise a clean</h2>
+<label>Title</label><input id="et" placeholder="e.g. Riverside litter pick">
+<label>Date &amp; time</label><input id="ed" type="datetime-local">
+<label>Location</label><input id="el" placeholder="Meeting point / town">
+<button class="p" id="eadd">Create event</button><div id="emsg" class="mute"></div></div>
+<div class="card"><h2>Request items</h2><p class="mute">Need bin bags or litter pickers for a clean? Ask the kit bank (see the Donate tab for what's in stock).</p>
+<label>Item</label><select id="ri"></select><label>How many?</label><input id="rq" type="number" min="1" value="10">
+<label>For which clean?</label><select id="rev"></select><label>Note (optional)</label><input id="rn" maxlength="120" placeholder="e.g. a group of 8 neighbours">
+<button class="p" id="rgo">Request</button><div id="rmsg" class="mute" style="margin-top:6px"></div></div></section>
+</main>
+
+<main id="v3" class="hide">
+<section style="grid-column:1/-1"><div class="card"><h2>Community impact</h2><div class="g" id="stats"></div></div></section>
+<section style="grid-column:1/-1"><div class="card"><h2>Good news</h2><p class="mute">Edit the <code>NEWS</code> list in app.js to post your own stories.</p><div id="stories"></div></div></section>
+</main>
+<main id="v4" class="hide">
+<section><div class="card"><h2>Donate</h2><p>Choose what your donation pays for. Contributions go towards kit for community cleans organised through JSN.</p>
+<label>What would you like to fund?</label><select id="gi"></select>
+<label>How many?</label><input id="gq" type="number" min="1" value="1">
+<p id="gtot" style="font-weight:600"></p>
+<button class="p" id="give">Donate</button><div id="gmsg" class="mute" style="margin-top:6px"></div>
+<p class="mute">JSN is not a registered charity. [Add how donations are held and reported here.]</p></div></section>
+<section><div class="card"><h2>Kit bank</h2><p class="mute">What we have in stock right now, funded by donations.</p><div class="g" id="bank"></div><p class="mute" id="bnote"></p><div id="badm" class="hide"></div></div>
+<div class="card"><h2>What your donation does</h2><div id="gimp"></div></div></section>
+</main>
+<main id="v5" class="hide info" style="grid-template-columns:1fr 1fr">
+<section><div class="card"><h2>Why litter matters</h2><p>Litter doesn't stay where it's dropped. Rain and wind carry it into drains, streams and rivers, and eventually the sea. Animals can swallow it or get tangled in it, and plastics break into tiny fragments (microplastics) that spread through soil and water.</p>
+<p>Clean verges, parks, riverbanks and beaches are better for wildlife, better for people, and help nature recover.</p></div>
+<div class="card"><h2>How long does it last?</h2><p class="mute">Rough, commonly quoted estimates – real times vary with conditions.</p>
+<div class="lb"><span>Cigarette butt</span><i style="width:15%"></i><span>~10+ yrs</span></div>
+<div class="lb"><span>Plastic bag</span><i style="width:25%"></i><span>~20 yrs</span></div>
+<div class="lb"><span>Aluminium can</span><i style="width:50%"></i><span>~200 yrs</span></div>
+<div class="lb"><span>Plastic bottle</span><i style="width:70%"></i><span>~450 yrs</span></div>
+<div class="lb"><span>Glass bottle</span><i style="width:100%"></i><span>1,000+ yrs</span></div></div>
+<div class="card"><h2>Learn more</h2><ul><li><a href="https://www.keepbritaintidy.org" target="_blank" rel="noopener">Keep Britain Tidy</a></li><li><a href="https://www.mcsuk.org" target="_blank" rel="noopener">Marine Conservation Society</a></li><li><a href="https://www.gov.uk/report-fly-tipping" target="_blank" rel="noopener">Report fly-tipping (GOV.UK)</a></li><li><a href="https://www.recyclenow.com" target="_blank" rel="noopener">Recycle Now</a></li></ul></div></section>
+<section><div class="card"><h2>What you can do</h2><ul><li>Carry a reusable bottle, cup and bag.</li><li>Take your rubbish home if a bin is full – never leave it beside it.</li><li>Check your council's recycling rules and rinse containers.</li><li>Choose less packaging and repair or reuse before buying new.</li><li>Report, photograph and map litter on JSN, then join a joint clean.</li><li>Dispose of cigarette ends in a bin, never the drain or ground.</li></ul></div>
+<div class="card"><h2>Litter-pick safely</h2><ul><li>Wear gloves and sturdy shoes; use a litter picker.</li><li>Never touch needles, broken glass or chemicals – report them to your council.</li><li>Stay off busy roads, steep banks and fast water.</li><li>Bring a bag for rubbish and one for recycling.</li><li>Fly-tipping (dumped bulky waste) is a crime – photograph it from a distance and report it.</li></ul></div>
+<div class="card"><h2>Protect nature while you clean</h2><ul><li>Look before you pick – don't disturb nests, burrows or plants.</li><li>Keep to paths in fragile places like dunes, heath and wetlands.</li><li>Take only rubbish; leave shells, stones and plants where they are.</li></ul></div></section>
+</main>
+<main id="v6" class="hide"><section style="grid-column:1/-1"><div id="acct"></div></section></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script></body></html>
