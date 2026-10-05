@@ -17,7 +17,7 @@ JSN does not ask users for an email. It derives a non-deliverable internal email
 
 ## 3. Create the database
 
-Open SQL Editor and run `supabase_schema.sql` in full, then run `supabase_patch_v3.sql` in full. **Do not skip the patch:** without it any user can make themselves an admin, and only the original reporter can mark a report cleaned.
+Open SQL Editor and run `supabase_schema.sql` in full, then `supabase_patch_v3.sql` in full, then `supabase_patch_v4.sql` (adds the Total raised figure). **Do not skip the patch:** without it any user can make themselves an admin, and only the original reporter can mark a report cleaned.
 
 This creates:
 
@@ -56,7 +56,7 @@ set is_admin = true
 where id = 'YOUR_USER_UUID';
 ```
 
-Admins can mark kit requests supplied and add/remove stock through the site.
+Admins can mark kit requests supplied, add/remove stock and record donations (which update Total raised) through the site.
 
 ## 6. Run locally
 
@@ -80,7 +80,6 @@ Commit these files:
 - `style.css`
 - `app.js`
 - `logo.png`
-- the `icons/` folder
 - `config.js`
 - `config.example.js`
 - `supabase_schema.sql`

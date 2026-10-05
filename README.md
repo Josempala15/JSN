@@ -7,7 +7,6 @@ JSN is a static frontend backed by Supabase. The existing map, community cleans,
 - `index.html` – page structure and Supabase CDN/config loading
 - `style.css` – colours and layout
 - `logo.png` – the JSN logo (hand-drawn smiley) shown in the header and browser tab
-- `icons/` – hand-drawn icons for report categories and kit items (a missing icon falls back to its emoji)
 - `app.js` – map, UI and Supabase integration
 - `config.example.js` – safe template for the browser Supabase configuration
 - `config.js` – public browser configuration for Supabase; it contains only the Supabase URL and publishable/anon key
@@ -18,7 +17,7 @@ JSN is a static frontend backed by Supabase. The existing map, community cleans,
 
 1. Create a Supabase project.
 2. In Authentication -> Providers -> Email, keep Email/password enabled and disable **Confirm email**. JSN uses a recovery code instead of asking for an email address.
-3. Run `supabase_schema.sql`, then `supabase_patch_v3.sql`, in Supabase SQL Editor (the patch fixes an admin-takeover hole and lets anyone mark a report cleaned, and adds good news).
+3. Run `supabase_schema.sql`, then `supabase_patch_v3.sql`, then `supabase_patch_v4.sql`, in Supabase SQL Editor (the patch fixes an admin-takeover hole and lets anyone mark a report cleaned, and adds good news).
 4. Copy `config.example.js` to `config.js` and enter the Supabase Project URL and publishable/anon key.
 5. Commit `config.js` to GitHub Pages. The publishable/anon key is designed to be used in browser code; never put a service-role/secret key in it.
 5. Create a JSN account in the site.
@@ -47,7 +46,7 @@ Then visit `http://localhost:8000`.
 Commit the application and setup files. `config.js` holds only the public Supabase URL and anon key, so it is fine (and needed) to commit it:
 
 ```bash
-git add index.html style.css app.js logo.png icons config.js config.example.js supabase_schema.sql supabase_patch_v3.sql README.md README_SUPABASE.md
+git add index.html style.css app.js logo.png config.js config.example.js supabase_schema.sql supabase_patch_v3.sql supabase_patch_v4.sql README.md README_SUPABASE.md
 git commit -m "Connect JSN to Supabase"
 git push
 ```
@@ -64,6 +63,7 @@ Supabase stores:
 - `kit_requests` – equipment requests
 - `kit_ledger` – stock received/lent out
 - `good_news` – posts shared on the Good news page (admins can remove)
+- `donations` – donations admins record; their sum is the "Total raised" figure on the Donate tab
 - `report-photos` Storage bucket – report images
 
 Realtime subscriptions keep reports, events, RSVPs, requests and kit stock updated without refreshing the page.
