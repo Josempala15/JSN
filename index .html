@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JSN – Clean UK Map</title>
+
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="stylesheet" href="style.css?v=10"></head><body>
+<header><img id="logo" src="logo.png" alt="JSN logo"><h1>JSN</h1><span style="flex:1"></span>
+<nav><button id="t1" class="on">Map</button><button id="t2">Community cleans</button><button id="t3">Good news</button><button id="t4">Donate</button><button id="t5">Information</button><button id="t6">My stats</button></nav><span id="who" class="mute" style="color:#cfeee2"></span></header>
+
+<main id="v1">
+<section>
+<div id="mapwrap"><div id="tiles"></div><svg id="ov"></svg>
+<div id="sb"><input id="q" placeholder="Search address or postcode"><button id="loc" title="My location">◎</button></div>
+<div class="ctl"><button id="zi">+</button><button id="zo">−</button></div>
+<div id="attr">© OpenStreetMap contributors</div><div id="pop" class="hide"></div></div>
+<div class="card" style="margin-top:12px">
+<p class="mute" style="margin:0">Tap a pin to see the photo and mark it cleaned – cleaned spots disappear from the map. Tap an empty spot to place a new report.</p></div>
+</section>
+<section>
+<div class="card"><h2>Report trash</h2>
+<label>1. Photo (location is read from the photo automatically)</label><input id="photo" type="file" accept="image/*">
+<div id="pin" class="mute" style="margin-top:6px">No location yet.</div>
+<label>2. What is it?</label><select id="cat"></select>
+<label>3. Note (optional)</label><input id="note" maxlength="200" placeholder="e.g. by the bench, two black bags">
+<button class="p" id="go">Submit report</button><div id="msg"></div></div>
+<div class="card"><h2>Needs cleaning</h2><div id="reps" class="mute">Nothing reported yet.</div></div>
+</section>
+</main>
+
+<main id="v2" class="hide">
+<section><div class="card hide" id="ncard"><h2>Your notifications</h2><div id="nlist"></div></div>
+<div class="card"><h2>Upcoming cleans</h2><div id="evs" class="mute">No cleans planned yet – create one!</div></div>
+<div class="card"><h2>Kit requests</h2><div id="reqs" class="mute">No requests yet.</div></div></section>
+<section><div class="card"><h2>Organise a clean</h2>
+<label>Title</label><input id="et" placeholder="e.g. Riverside litter pick">
+<label>Date &amp; time</label><input id="ed" type="datetime-local">
+<label>Location</label><input id="el" placeholder="Meeting point / town">
+<button class="p" id="eadd">Create event</button><div id="emsg" class="mute"></div></div>
+<div class="card"><h2>Request items</h2><p class="mute">Need bin bags or litter pickers for a clean? Ask the kit bank (see the Donate tab for what's in stock).</p>
+<label>Item</label><select id="ri"></select><label>How many?</label><input id="rq" type="number" min="1" value="10">
+<label>For which clean?</label><select id="rev"></select><label>Note (optional)</label><input id="rn" maxlength="120" placeholder="e.g. a group of 8 neighbours">
+<button class="p" id="rgo">Request</button><div id="rmsg" class="mute" style="margin-top:6px"></div></div></section>
+</main>
+
+<main id="v3" class="hide">
+<section style="grid-column:1/-1"><h2 style="text-align:center">Community impact</h2>
+<div id="willow"><svg id="wsvg" viewBox="0 0 800 270" preserveAspectRatio="xMidYMax meet" aria-hidden="true"></svg><div id="stats"></div></div></section>
+<section style="grid-column:1/-1"><div class="card"><h2>Good news</h2>
+<div id="npost"><label>Share your good news (you need a My stats account)</label><input id="ntitle" maxlength="80" placeholder="Headline, e.g. We cleared the canal!">
+<label>Your story</label><textarea id="nbody" maxlength="600" rows="4" placeholder="What happened? Who helped?"></textarea>
+<button class="p" id="nsend">Post</button><div id="nmsg" class="mute" style="margin-top:6px"></div></div>
+<div id="stories"></div></div></section>
+</main>
+<main id="v4" class="hide">
+<section><div class="card"><h2>Total raised</h2><div id="raised"></div><div id="radm" class="hide"></div></div>
+<div class="card"><h2>Donate</h2><p>All donations go towards funding supplies for solo or community events.</p>
+<label>Amount (£)</label><input id="gamt" type="number" min="1" max="10000" step="any" value="10" inputmode="decimal">
+<button class="p" id="give">Donate</button><div id="gmsg" class="mute" style="margin-top:6px"></div>
+</div>
+</section>
+<section><div class="card"><h2>Kit bank</h2><p class="mute">What we have in stock right now, funded by donations.</p><div class="g" id="bank"></div><p class="mute" id="bnote"></p><div id="badm" class="hide"></div></div></section>
+</main>
+<main id="v5" class="hide info"><section style="grid-column:1/-1"><p class="mute" style="text-align:center">Tap a box to open it. Tap it again to close it.</p><div class="accg"><div class="acc" tabindex="0"><h3>Why litter matters</h3><div class="accb"><p>Litter doesn't stay where it's dropped. Rain and wind carry it into drains, streams and rivers, and eventually the sea. Animals can swallow it or get tangled in it, and plastics break into tiny fragments (microplastics) that spread through soil and water.</p><p>Clean verges, parks, riverbanks and beaches are better for wildlife and for people.</p><h4>Litter and wildlife</h4><ul><li><b>914 species</b> are known to be affected by marine debris: 701 by eating it, 354 by entanglement.<sup>1</sup></li><li>Among petrels, albatrosses and shearwaters, <b>41%</b> of birds checked had plastic inside them, on average <b>9.9 pieces</b> each.<sup>1</sup></li><li><b>All 7</b> sea turtle species, <b>81 of 123</b> marine mammal species and <b>203 of 406</b> seabird species have been recorded eating or tangled in plastic.<sup>2</sup></li><li>Another review found <b>about 92%</b> of cases involved plastic, <b>17%</b> of the species were near threatened to critically endangered, and nearly <b>80%</b> of entanglement cases caused harm or death.<sup>3</sup></li></ul><p class="mute">Most studies are of sea life; land animals are less studied.</p><div class="ref">1. Kühn &amp; van Franeker (2020), <i>Marine Pollution Bulletin</i> – <a href="https://www.wur.nl/nl/show/Quantitative-overview-of-marine-debris-ingested-by-marine-megafauna.htm" target="_blank" rel="noopener">summary</a>.<br>2. Kühn, Bravo Rebolledo &amp; van Franeker (2015), in <i>Marine Anthropogenic Litter</i>, Springer – <a href="https://doi.org/10.1007/978-3-319-16510-3_4" target="_blank" rel="noopener">doi</a>.<br>3. Gall &amp; Thompson (2015), <i>Marine Pollution Bulletin</i>, Plymouth University – <a href="https://www.conservationjobs.co.uk/articles/marine-debris-affects-hundreds-of-species/" target="_blank" rel="noopener">summary</a>.</div></div></div><div class="acc" tabindex="0"><h3>How long does litter last?</h3><div class="accb"><p>A ten-year field study followed cigarette butts (the most common litter item) in different places. Share of the butt's mass lost after 10 years:</p><div class="lb"><span>Bare surface (like a street)</span><i style="width:52%"></i><span>~52%</span></div><div class="lb"><span>Sandy soil</span><i style="width:71%"></i><span>66–76%</span></div><div class="lb"><span>Grassland soil</span><i style="width:84%"></i><span>up to 84%</span></div><p>Even in the best case, part of the filter was still there after a decade, broken into microplastic fragments. Toxicity was highest just after smoking and peaked again mid-way through decay.</p><p class="mute">You'll often see "450 years" for plastic bottles. Those are estimates rather than measurements – a 2024 review of 38 studies said accurately measuring plastic breakdown over time is still a challenge.</p><div class="ref">Bonanomi et al. (2026), “Long-term cigarette butts' decomposition over 10 years…”, <i>Environmental Pollution</i> 397 – <a href="https://doi.org/10.1016/j.envpol.2026.127944" target="_blank" rel="noopener">doi</a>. Review: <a href="https://theoceancleanup.com/scientific-publications/aging-of-plastics-and-microplastics-in-the-environment-a-review-on-influencing-factors-quantification-methods-challenges-and-future-perspectives/" target="_blank" rel="noopener">Aging of plastics and microplastics in the environment</a> (Dec 2024).</div></div></div><div class="acc" tabindex="0"><h3>What you can do</h3><div class="accb"><ul><li>Carry a reusable bottle, cup and bag.</li><li>Take your rubbish home if a bin is full – never leave it beside it.</li><li>Check your council's recycling rules and rinse containers.</li><li>Choose less packaging and repair or reuse before buying new.</li><li>Report, photograph and map litter on JSN, then join a community clean.</li><li>Put cigarette ends in a bin, never the drain or ground.</li></ul><h4>Fast fashion</h4><p>Clothes are litter too when they're binned, and cheap, short-lived fashion adds up.</p><ul><li>The UK bought <b>1.42 million tonnes</b> of textiles in 2022 and put about <b>711,000 tonnes</b> of used textiles in general waste – around <b>35 items per person</b> a year. Of the textiles in England's general waste, 84% was incinerated and 11% went to landfill.<sup>1</sup></li><li>Making textiles produces about <b>1.2 billion tonnes</b> of greenhouse gases a year, more than international flights and shipping combined.<sup>2</sup></li><li>A UK parliamentary report noted synthetic fibres turning up in the deep sea, Arctic sea ice, fish and shellfish.<sup>3</sup></li></ul><p><b>What helps:</b> buy less and choose lasting pieces, buy second-hand, repair and swap, give unwanted clothes to charity shops or textile banks instead of the bin, wash synthetics less often and cooler, and be wary of vague “eco” claims.</p><div class="ref">1. WRAP, Textiles Market Situation Report 2024 – <a href="https://wrap.ngo/media-centre/press-releases/price-our-addiction-cheap-fast-fashion-pressure-builds-uk-second-hand" target="_blank" rel="noopener">press release</a>.<br>2. Ellen MacArthur Foundation (2017), as reported by <a href="https://resourcemedia.eco/article/london-tackles-fast-fashion-waste-13142" target="_blank" rel="noopener">resource.co</a>.<br>3. UK Environmental Audit Committee (2019), as reported by the <a href="https://weforum.org/agenda/2019/02/7-ways-to-break-the-fast-fashion-habit-and-save-the-planet" target="_blank" rel="noopener">World Economic Forum</a>.</div></div></div><div class="acc" tabindex="0"><h3>Litter-pick safely</h3><div class="accb"><ul><li>Wear gloves and sturdy shoes; use a litter picker.</li><li>Never touch needles, broken glass or chemicals – report them to your council.</li><li>Stay off busy roads, steep banks and fast water.</li><li>Bring a bag for rubbish and one for recycling.</li><li>Fly-tipping is a crime – photograph it from a distance and report it.</li></ul><h4>Protect nature while you clean</h4><ul><li>Look before you pick – don't disturb nests, burrows or plants.</li><li>Keep to paths in fragile places like dunes, heath and wetlands.</li><li>Take only rubbish; leave shells, stones and plants where they are.</li></ul></div></div></div><div class="card links"><h2>Useful websites</h2><div class="lg"><a href="https://www.keepbritaintidy.org" target="_blank" rel="noopener"><b>Keep Britain Tidy</b><span>The UK anti-litter charity – join or start a litter pick.</span></a><a href="https://www.mcsuk.org" target="_blank" rel="noopener"><b>Marine Conservation Society</b><span>Beach cleans and protecting UK seas.</span></a><a href="https://www.sas.org.uk" target="_blank" rel="noopener"><b>Surfers Against Sewage</b><span>Beach cleans and campaigns against plastic pollution.</span></a><a href="https://www.gov.uk/report-fly-tipping" target="_blank" rel="noopener"><b>Report fly-tipping (GOV.UK)</b><span>Tell your council about dumped rubbish.</span></a><a href="https://www.gov.uk/find-local-council" target="_blank" rel="noopener"><b>Find your local council (GOV.UK)</b><span>Report litter, full bins and other problems.</span></a><a href="https://www.recyclenow.com" target="_blank" rel="noopener"><b>Recycle Now</b><span>Check what you can recycle where you live.</span></a><a href="https://wrap.ngo" target="_blank" rel="noopener"><b>WRAP</b><span>Research and tips on cutting waste.</span></a></div></div></section></main>
+<main id="v6" class="hide"><section style="grid-column:1/-1"><div id="acct"></div></section></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>window.supabase||document.write('<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"><\/script>')</script>
+<!-- ?v= numbers make browsers fetch the new version after an update; bump them each time you change these files -->
+<script src="config.js?v=10"></script>
+<script src="app.js?v=10"></script></body></html>
