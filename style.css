@@ -54,3 +54,10 @@ button.p:disabled{opacity:.5}button.s{background:none;border:1px solid var(--lin
 .badge{display:inline-block;margin-left:6px;min-width:20px;padding:0 6px;border-radius:10px;background:#e8792b;color:#fff;font-size:13px;line-height:20px;text-align:center;vertical-align:1px}
 .note{padding:8px 0;border-top:1px solid var(--line);font-size:14px}.note.new{background:#143823;margin:0 -8px;padding:8px;border-radius:8px}
 .pill{background:var(--acc);color:#08180f;border-radius:6px;padding:0 6px;font-size:12px;font-weight:bold}
+.modal{position:fixed;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}.modal.hide{display:none}
+.modal .box{background:var(--panel);border:1px solid var(--acc);border-radius:14px;padding:18px;max-width:420px;width:100%;box-shadow:0 10px 40px #000a}
+a.btn{display:inline-block;text-decoration:none;color:#fff;margin-top:10px;background:linear-gradient(90deg,#548C2F,#2f7a45);border-radius:8px;padding:9px 14px}
+.meet{margin-top:6px;padding:8px;border-radius:8px;background:#143823;border:1px solid var(--line);font-size:14px}.meet a{color:var(--acc)}
+/* phones: willow numbers sit neatly in a grid under the tree instead of over the leaves */
+@media(max-width:600px){#stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 6px;margin-top:10px;padding:0}#stats .st{min-width:0;font-size:13px;text-shadow:none}#stats .st b{font-size:24px}}
+.dt{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.dt select{width:auto;flex:1 1 70px}.dt #edm{flex:2 1 120px}.dt span{color:var(--mute)}
