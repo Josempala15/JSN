@@ -248,7 +248,7 @@ $('rset').onclick=async()=>{const p=Math.round((+$('ramt').value||0)*100),m=$('r
  const d={id:Date.now()+'_'+localId,pence:p,note:$('rnote').value.trim().slice(0,120),by:myId(),t:Date.now()};
  if(db){try{await db.doc('donations/'+d.id).set(d);m.textContent='Added.';$('ramt').value='';$('rnote').value=''}catch(e){m.textContent='Could not save – is supabase_patch_v4.sql installed?'}}else{DONS.push(d);drawRaised();m.textContent='Added (demo only – not saved).'}};
 // ("What your money buys" section removed)
-$('give').onclick=()=>{const a=+$('gamt').value;$('gmsg').textContent=!(a>=1&&a<=1e4)?'Please enter an amount between £1 and £10,000.':"Payments aren't connected yet – a provider like Stripe would go here."};
+// Donate button is a plain link to the GoFundMe page (see index.html) – no code needed.
 // ---- good news: anyone with an account can post; admins can remove posts ----
 let POSTS=[],lastPost=0;
 const NEWS=[{t:'Sample story: a riverside cleared in a morning',x:'[Sample – shown only with demo data.] Neighbours met at the bridge and filled bags in a single morning.'},{t:'Sample story: a school takes on its local park',x:'[Sample – shown only with demo data.] A class mapped litter on JSN, then organised a clean.'}];
