@@ -39,7 +39,7 @@ button.p:disabled{opacity:.5}button.s{background:none;border:1px solid var(--lin
 #willow{position:relative;max-width:820px;margin:0 auto}#wsvg{width:100%;height:auto;display:block}
 #stats{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px;margin-top:-92px;position:relative;text-align:center;padding:0 10px 10px}
 #stats .st b{display:block;font-size:30px;color:#dff5c8}#stats .st{text-shadow:0 2px 6px #000a;min-width:110px}
-.accg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;align-items:start}@media(max-width:600px){.accg{grid-template-columns:1fr}}
+.accg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:start}@media(max-width:600px){.accg{grid-template-columns:1fr}}
 .acc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;outline:none;transition:border-color .3s,background .3s}
 .acc h3{margin:0;font-size:18px;color:#dff5c8}.acc h3:after{content:" \25BE";color:var(--acc);font-size:14px}
 .accb{max-height:0;opacity:0;overflow:hidden;transition:max-height .45s ease,opacity .35s ease,margin .3s}
@@ -70,3 +70,11 @@ input[type=file]{padding:6px;color:var(--mute);cursor:pointer}
 input[type=file]::file-selector-button{font:inherit;background:linear-gradient(90deg,#548C2F,#2f7a45);color:#fff;border:0;border-radius:8px;padding:8px 14px;margin-right:10px;cursor:pointer}
 input[type=file]::-webkit-file-upload-button{font:inherit;background:linear-gradient(90deg,#548C2F,#2f7a45);color:#fff;border:0;border-radius:8px;padding:8px 14px;margin-right:10px;cursor:pointer}
 input[type=file]:hover::file-selector-button{filter:brightness(1.1)}
+#loc{font-size:20px;min-width:40px}#loc.busy{animation:bob 1s ease-in-out infinite}
+.lchart{display:grid;gap:5px}.lc{display:grid;grid-template-columns:130px 1fr 100px;align-items:center;gap:8px;font-size:13px}
+.lc .t{position:relative;height:14px;background:#0b2015;border-radius:7px;overflow:hidden}.lc .t i{display:block;height:100%;border-radius:7px}
+.lc .v{color:var(--mute);font-size:12px}.lc.ax .t{background:none;height:16px;overflow:visible}.lc.ax b{position:absolute;font-weight:normal;font-size:11px;color:var(--mute);white-space:nowrap}
+.lc.ax b{transform:translateX(-50%)}
+@media(max-width:600px){#stats{grid-template-columns:repeat(2,1fr)}.lc{grid-template-columns:100px 1fr 80px;font-size:12px}}
+@media(max-width:600px){.lc.ax b{font-size:10px}}
+.litterchart{max-width:760px;margin:0 auto 22px}.litterchart>p:first-of-type{text-align:center;color:var(--mute);font-size:15px}.litterchart .ref{border-top:0;text-align:center}
