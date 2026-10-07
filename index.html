@@ -4,7 +4,7 @@
 <title>JSN – Clean UK Map</title>
 
 <link rel="icon" type="image/png" href="logo.png">
-<link rel="stylesheet" href="style.css?v=33"></head><body>
+<link rel="stylesheet" href="style.css?v=35"></head><body>
 <header><img id="logo" src="logo.png" alt="JSN logo"><h1>JSN</h1><span style="flex:1"></span>
 <nav><button id="t1" class="on">Map</button><button id="t2">Community cleans</button><button id="t3">Good news</button><button id="t4">Donate</button><button id="t5">Information</button><button id="t6">My stats</button></nav><span id="who" class="mute" style="color:#cfeee2"></span></header>
 
@@ -50,9 +50,8 @@
 </main>
 <main id="v4" class="hide">
 <section><div class="card"><h2>Total raised</h2><div id="raised"></div><div id="radm" class="hide"></div></div>
-<div class="card"><h2>Donate</h2><p>All donations go towards resources and supplies for solo and community cleans.</p>
-<label>Amount (£)</label><input id="gamt" type="number" min="1" max="10000" step="any" value="10" inputmode="decimal">
-<button class="p" id="give">Donate</button><div id="gmsg" class="mute" style="margin-top:6px"></div>
+<div class="card"><h2>Donate</h2><p>All donations go towards resources and supplies for solo and community cleans.</p><p class="mute" style="margin-top:-4px">Follow and look at our Instagram to see what your donation helped achieve.</p>
+<a class="p btn" id="give" href="https://gofund.me/15d8a7427" target="_blank" rel="noopener" style="font-size:18px;padding:11px 22px">Donate on GoFundMe</a><p class="mute" style="margin:8px 0 0">Opens our GoFundMe page in a new tab.</p>
 </div>
 </section>
 <section><div class="card"><h2>Kit bank</h2><p class="mute">What we have in stock right now, funded by donations.</p><div class="g" id="bank"></div><p class="mute" id="bnote"></p><div id="badm" class="hide"></div></div></section>
@@ -62,5 +61,5 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>window.supabase||document.write('<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"><\/script>')</script>
 <!-- ?v= numbers make browsers fetch the new version after an update; bump them each time you change these files -->
-<script src="config.js?v=33"></script>
-<script src="app.js?v=33"></script></body></html>
+<script src="config.js?v=35"></script>
+<script src="app.js?v=35"></script></body></html>
