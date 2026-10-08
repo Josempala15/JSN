@@ -47,7 +47,7 @@ button.p:disabled{opacity:.5}button.s{background:none;border:1px solid var(--lin
 .acc:hover,.acc:focus-visible,.acc.open{border-color:var(--acc);background:#143823}
 .acc.open h3:after{content:" \25B4"}
 .acc h4{margin:12px 0 4px;color:#dff5c8;font-size:15px}
-.acc.open .accb{max-height:4000px;opacity:1;margin-top:8px}
+.acc.open .accb{max-height:12000px;opacity:1;margin-top:8px}
 .ref{font-size:12px;color:var(--mute);margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}.acc a{color:var(--acc)}
 .buy{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--line)}.buy b{color:#dff5c8;font-size:20px;min-width:54px;text-align:right}
 .links{margin-top:16px}.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
@@ -78,3 +78,9 @@ input[type=file]:hover::file-selector-button{filter:brightness(1.1)}
 @media(max-width:600px){#stats{grid-template-columns:repeat(2,1fr)}.lc{grid-template-columns:100px 1fr 80px;font-size:12px}}
 @media(max-width:600px){.lc.ax b{font-size:10px}}
 .litterchart{max-width:760px;margin:0 auto 22px}.litterchart>p:first-of-type{text-align:center;color:var(--mute);font-size:15px}.litterchart .ref{border-top:0;text-align:center}
+.joinbtn{background:#fff;color:#2f6b1f;border:0;border-radius:999px;padding:6px 14px;font:inherit;font-weight:700;cursor:pointer}
+.welcome{text-align:left}.welcome h2{text-align:center;font-size:22px;margin:4px 0 6px}.welcome>p{margin:0 0 8px}
+.wlogo{display:block;height:60px;margin:0 auto;background:#548C2F;border-radius:50%;padding:6px}
+.perks{list-style:none;padding:0;margin:8px 0 12px;display:grid;gap:8px}.perks li{display:flex;align-items:center;gap:10px}.perks .ico{width:34px;height:34px;flex:0 0 34px}
+@media(max-width:600px){.modal{align-items:flex-end;padding:0}.modal .box{border-radius:16px 16px 0 0;max-height:92vh;overflow:auto;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}}
+@media(max-width:600px){header nav{order:3;width:100%}#who{order:2}.joinbtn{order:1;padding:5px 12px;font-size:15px}}
